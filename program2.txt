@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[64]:
+
+
+import os
+import pathlib
+
+
+# In[1]:
+
+
+get_ipython().system('pip install seaborn')
+
+
+# In[68]:
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# In[3]:
+
+
+mpg = pd.read_csv("C:/Users/DS1/Downloads/mpg_raw.csv")
+
+
+# In[4]:
+
+
+mpg.head()
+
+
+# In[5]:
+
+#Dimension
+mpg.shape
+
+
+# In[6]:
+
+#Structure
+mpg.info()
+
+
+# In[7]:
+
+#Summary
+mpg.describe()
+
+
+# In[10]:
+
+
+mpg.isna().sum()
+
+
+# In[13]:
+
+
+mpg['horsepower'] = mpg['horsepower'].fillna(mpg['horsepower'].mean())
+
+# In[14]:
+
+
+mpg.isna().sum()
+
+
+# In[ ]:
+
+
+#part(c)
+
+
+# In[23]:
+
+#changing Continous variable into categorical variable
+mpg['displacement']=pd.Categorical(mpg['displacement'])
+mpg['cylinders']=pd.Categorical(mpg['cylinders'])
+
+
+
+#Part(i)
+#Plotting histogram for continuous variable
+plt.hist(mpg['horsepower'])
+
+OR
+
+
+columns=['mpg','horsepower','weight','acceleration']
+for column in columns:
+    plt.hist(mpg[column])
+    plt.show()
+
+
+#part(ii) Scatter plot using 2 continuous variable
+
+sns.scatterplot(x=mpg['horsepower'],y=mpg['weight'])
+
+
+#OR
+sns.violinplot(x='horsepower',y='model_year',data=mpg)
+
+
+
+#part(iii) display the frequency of categorical value using count plot
+
+sns.countplot(x=mpg['displacement'])
+
+
+
+#Part(iv) display the point plot to show frequency of one categorical and one continuous variable
+
+sns.pointplot(x='acceleration',y='displacement',data=mpg)
